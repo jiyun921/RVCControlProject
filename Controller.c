@@ -1,10 +1,8 @@
 #include "header.h"
 #include <stdio.h>
 
-// Controller 함수
-void Controller(ObstacleLocation *location, DustExistence *dust, int tick) {
-
-    // SensorInterface 함수 호출
+void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool *result) {
+    
     FrontSensorInterface(location, location->FrontObstacle, tick);
     LeftSensorInterface(location, location->LeftObstacle, tick);
     RightSensorInterface(location, location->RightObstacle, tick);
@@ -18,4 +16,15 @@ void Controller(ObstacleLocation *location, DustExistence *dust, int tick) {
     MotorInterface(location, &cmds);
     CleanerInterface(dust, &cmds);
 
+
+    if (!location->FrontObstacle && !dust->exist) {
+        *result = true; 
+    } else if (location->FrontObstacle && !location->LeftObstacle) {
+        *result = true; 
+    } else if (location->FrontObstacle && location->LeftObstacle && !location->RightObstacle) {
+        *result = true; 
+    } else {
+        *result = false; 
+    }
 }
+

@@ -5,7 +5,6 @@ void MotorInterface(ObstacleLocation *loc, Commands *commands){
     if (!loc->FrontObstacle) {
         commands->MotorCommands.MoveForward = true;
     } 
-    // 장애물이 있을 때는 회전하거나 후진
     else if (loc->FrontObstacle) {
         if (!loc->LeftObstacle) {
             commands->MotorCommands.TurnLeft = true;
