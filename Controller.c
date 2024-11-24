@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool *result) {
-    
     // 센서 인터페이스 호출
     FrontSensorInterface(location, location->FrontObstacle, tick);
     LeftSensorInterface(location, location->LeftObstacle, tick);
@@ -19,6 +18,7 @@ void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool 
 
     // 먼지가 있으면 제거
     if (dust->exist) {
+        cmds.CleanerCommands.Clean = true;
         dust->exist = false; // 먼지 제거
     }
 
@@ -34,12 +34,15 @@ void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool 
         } else if (location->LeftObstacle && !location->RightObstacle && !dust->exist) {
             // 전방 및 좌측에 장애물이 있지만 우측에 장애물이 없고 먼지도 없으면 우회전 가능
             *result = true;
+        } else if (location->LeftObstacle && !location->RightObstacle) {
+            // 전방 및 좌측, 우측에 장애물이 있으면 뒤로 돌기 가능
+            *result = true;
         } else {
             // 전방에 장애물이 있는 경우 전진 불가
             *result = false;
         }
     } else if (dust->exist) {
-        // 먼지가 있는 경우 전진 불가, 먼지 제거만 가능
+        // 먼지 제거
         *result = false;
     }
 }

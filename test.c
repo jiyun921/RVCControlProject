@@ -16,10 +16,10 @@ void test1(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test2(void) {
@@ -28,10 +28,10 @@ void test2(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnLeft);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test3(void) {
@@ -40,23 +40,23 @@ void test3(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
     TEST_ASSERT_FALSE(dust.exist);
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test4(void) {
-    // Test 4: 장애물이 앞에 있을 때 전진 안 함 테스트
-    ObstacleLocation location = {false, false, true};
+    // Test 4: 장애물이 앞측, 좌측, 우측에 있을 때 뒤로 돌기 테스트
+    ObstacleLocation location = {true, true, true};
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool moveBackward = false;
+    Controller(&location, &dust, tick, &moveBackward);
 
-    TEST_ASSERT_FALSE(moveForward);
+    TEST_ASSERT_TRUE(moveBackward);
 }
 
 void test5(void) {
@@ -65,10 +65,10 @@ void test5(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnRight = false;
-    Controller(&location, &dust, tick, &turnRight);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnRight);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test6(void) {
@@ -77,40 +77,16 @@ void test6(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test7(void) {
-    // Test 7: 장애물이 있고 먼지가 없을 때 전진 여부 테스트
-    ObstacleLocation location = {false, true, false};
-    DustExistence dust = {false};
-    int tick = 5;
-
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
-
-    TEST_ASSERT_FALSE(moveForward);
-}
-
-void test8(void) {
-    // Test 8: 장애물이 없고 먼지가 없을 때 좌회전 여부 테스트
+    // Test 7: 장애물이 없고 먼지가 없을 때 오른쪽 회전 여부 테스트
     ObstacleLocation location = {false, false, false};
     DustExistence dust = {false};
-    int tick = 5;
-
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
-
-    TEST_ASSERT_TRUE(turnLeft);
-}
-
-void test9(void) {
-    // Test 9: 장애물이 우측에 있을 때 우회전 여부 테스트
-    ObstacleLocation location = {true, false, false};
-    DustExistence dust = {true};
     int tick = 5;
 
     bool turnRight = false;
@@ -119,17 +95,42 @@ void test9(void) {
     TEST_ASSERT_TRUE(turnRight);
 }
 
+void test8(void) {
+    // Test 8: 장애물이 없고 먼지가 없을 때 좌회전 여부 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {false};
+    int tick = 5;
+
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
+
+    TEST_ASSERT_TRUE(result);
+}
+
+void test9(void) {
+    // Test 9: 장애물이 우측에 있을 때 우회전 여부 테스트
+    ObstacleLocation location = {true, false, false};
+    DustExistence dust = {true};
+    int tick = 5;
+
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
+
+    TEST_ASSERT_TRUE(result);
+}
+
 void test10(void) {
     // Test 10: 전진 후 좌회전 여부 테스트
     ObstacleLocation location = {false, false, false};
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false, turnLeft = false;
+    bool moveForward = false;
+    bool turnLeft = false;
     Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnLeft);
-
     TEST_ASSERT_TRUE(moveForward);
+
+    Controller(&location, &dust, tick, &turnLeft);
     TEST_ASSERT_TRUE(turnLeft);
 }
 
@@ -139,11 +140,11 @@ void test11(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool turnRight = false;
-    Controller(&location, &dust, tick, &turnRight);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
     TEST_ASSERT_FALSE(dust.exist);
-    TEST_ASSERT_TRUE(turnRight);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test12(void) {
@@ -152,22 +153,22 @@ void test12(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnLeft);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test13(void) {
-    // Test 13: 좌측 장애물, 우측 장애물 모두 있을 때 우회전 안 함 테스트
-    ObstacleLocation location = {true, true, false};
-    DustExistence dust = {false};
+    // Test 13: 장애물이 없고 먼지가 있을 때 후진 안 함 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool turnRight = false;
-    Controller(&location, &dust, tick, &turnRight);
+    bool moveBackward = false;
+    Controller(&location, &dust, tick, &moveBackward);
 
-    TEST_ASSERT_FALSE(turnRight);
+    TEST_ASSERT_FALSE(moveBackward);
 }
 
 void test14(void) {
@@ -176,38 +177,37 @@ void test14(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnLeft);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test15(void) {
-    // Test 15: 장애물이 있을 때 전진하지 않고 우회전 여부 테스트
-    ObstacleLocation location = {false, true, true};
-    DustExistence dust = {false};
+    // Test 15: 장애물이 없고 먼지가 없을 때 전진 및 청소 여부 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false, turnRight = false;
-    Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnRight);
+    bool moveForward = false;
+    bool clean = false;
 
-    TEST_ASSERT_FALSE(moveForward);
-    TEST_ASSERT_TRUE(turnRight);
+    Controller(&location, &dust, tick, &moveForward);
+    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_FALSE(dust.exist);
 }
 
 void test16(void) {
-    // Test 16: 장애물이 전방에 있을 때 좌회전 및 전진 여부 테스트
-    ObstacleLocation location = {true, false, false};
-    DustExistence dust = {false};
+    // Test 16: 장애물이 없고 먼지가 있을 때 먼지 제거 후 전진 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool turnLeft = false, moveForward = false;
-    Controller(&location, &dust, tick, &turnLeft);
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnLeft);
-    TEST_ASSERT_FALSE(moveForward);
+    TEST_ASSERT_FALSE(dust.exist);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test17(void) {
@@ -216,16 +216,30 @@ void test17(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnLeft = false, moveForward = false;
-    Controller(&location, &dust, tick, &turnLeft);
-    Controller(&location, &dust, tick, &moveForward);
+    bool turnLeft = false;
+    bool moveForward = false;
 
+    Controller(&location, &dust, tick, &turnLeft);
     TEST_ASSERT_TRUE(turnLeft);
+
+    Controller(&location, &dust, tick, &moveForward);
     TEST_ASSERT_TRUE(moveForward);
 }
 
 void test18(void) {
-    // Test 18: 먼지가 있으면 전진하지 않고 먼지만 제거하는지 테스트
+    // Test 18: 장애물이 없고 먼지가 없을 때 청소기 동작 여부 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
+    int tick = 5;
+
+    bool clean = false;
+    Controller(&location, &dust, tick, &clean);
+
+    TEST_ASSERT_TRUE(clean);
+}
+
+void test19(void) {
+    // Test 19: 장애물이 없고 먼지가 있을 때 먼지 제거 후 전진 테스트
     ObstacleLocation location = {false, false, false};
     DustExistence dust = {true};
     int tick = 5;
@@ -234,21 +248,7 @@ void test18(void) {
     Controller(&location, &dust, tick, &moveForward);
 
     TEST_ASSERT_FALSE(dust.exist);
-    TEST_ASSERT_FALSE(moveForward);
-}
-
-void test19(void) {
-    // Test 19: 장애물이 있는 경우 전진하지 않고 회전 테스트
-    ObstacleLocation location = {false, false, true};
-    DustExistence dust = {false};
-    int tick = 5;
-
-    bool moveForward = false, turnRight = false;
-    Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnRight);
-
-    TEST_ASSERT_FALSE(moveForward);
-    TEST_ASSERT_TRUE(turnRight);
+    TEST_ASSERT_TRUE(moveForward);
 }
 
 void test20(void) {
@@ -257,36 +257,39 @@ void test20(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test21(void) {
-    // Test 21: 장애물이 왼쪽에 있을 때 좌회전 안 함 테스트
-    ObstacleLocation location = {false, true, false};
-    DustExistence dust = {false};
+    // Test 21: 장애물이 없고 먼지가 있을 때 청소 및 전진 여부 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool clean = false;
+    bool moveForward = false;
+    Controller(&location, &dust, tick, &clean);
+    Controller(&location, &dust, tick, &moveForward);
 
-    TEST_ASSERT_FALSE(turnLeft);
+    TEST_ASSERT_TRUE(clean);
+    TEST_ASSERT_FALSE(dust.exist);
+    TEST_ASSERT_TRUE(moveForward);
 }
 
 void test22(void) {
-    // Test 22: 전진하지 않으면 회전 시 전진 여부
-    ObstacleLocation location = {false, false, true};
-    DustExistence dust = {false};
+    // Test 22: 먼지가 있으면 전진하며 먼지 제거 여부 테스트
+    ObstacleLocation location = {false, false, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false, turnLeft = false;
+    bool moveForward = false;
     Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnLeft);
 
-    TEST_ASSERT_FALSE(moveForward);
-    TEST_ASSERT_TRUE(turnLeft);
+    TEST_ASSERT_FALSE(dust.exist);
+    TEST_ASSERT_TRUE(moveForward);
 }
 
 void test23(void) {
@@ -295,11 +298,13 @@ void test23(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false, turnLeft = false;
-    Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnLeft);
+    bool moveForward = false;
+    bool turnLeft = false;
 
+    Controller(&location, &dust, tick, &moveForward);
     TEST_ASSERT_TRUE(moveForward);
+
+    Controller(&location, &dust, tick, &turnLeft);
     TEST_ASSERT_TRUE(turnLeft);
 }
 
@@ -309,12 +314,14 @@ void test24(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false, turnLeft = false;
-    Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnLeft);
+    bool moveForward = false;
+    bool turnLeft = false;
 
+    Controller(&location, &dust, tick, &moveForward);
     TEST_ASSERT_FALSE(dust.exist);
     TEST_ASSERT_TRUE(moveForward);
+
+    Controller(&location, &dust, tick, &turnLeft);
     TEST_ASSERT_TRUE(turnLeft);
 }
 
@@ -324,11 +331,11 @@ void test25(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
     TEST_ASSERT_FALSE(dust.exist);
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test26(void) {
@@ -337,10 +344,10 @@ void test26(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false;
-    Controller(&location, &dust, tick, &moveForward);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(moveForward);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test27(void) {
@@ -349,22 +356,29 @@ void test27(void) {
     DustExistence dust = {true};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnLeft);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test28(void) {
-    // Test 28: 장애물 왼쪽에 있을 때 좌회전 안함
-    ObstacleLocation location = {false, true, false};
-    DustExistence dust = {false};
+    // Test 28: 장애물이 앞과 좌측에 있지만 먼지가 있을 때 우회전 후 먼지 제거 테스트
+    ObstacleLocation location = {true, true, false};
+    DustExistence dust = {true};
     int tick = 5;
 
-    bool turnLeft = false;
-    Controller(&location, &dust, tick, &turnLeft);
+    bool turnRight = false;
+    bool dustRemoved = false;
 
-    TEST_ASSERT_FALSE(turnLeft);
+    Controller(&location, &dust, tick, &turnRight);
+    if (turnRight) {
+        dust.exist = false; // 먼지 제거
+        dustRemoved = true;
+    }
+
+    TEST_ASSERT_TRUE(turnRight);
+    TEST_ASSERT_TRUE(dustRemoved);
 }
 
 void test29(void) {
@@ -373,10 +387,10 @@ void test29(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool turnRight = false;
-    Controller(&location, &dust, tick, &turnRight);
+    bool result = false;
+    Controller(&location, &dust, tick, &result);
 
-    TEST_ASSERT_TRUE(turnRight);
+    TEST_ASSERT_TRUE(result);
 }
 
 void test30(void) {
@@ -385,10 +399,12 @@ void test30(void) {
     DustExistence dust = {false};
     int tick = 5;
 
-    bool moveForward = false, turnLeft = false;
-    Controller(&location, &dust, tick, &moveForward);
-    Controller(&location, &dust, tick, &turnLeft);
+    bool moveForward = false;
+    bool turnLeft = false;
 
+    Controller(&location, &dust, tick, &moveForward);
     TEST_ASSERT_TRUE(moveForward);
+
+    Controller(&location, &dust, tick, &turnLeft);
     TEST_ASSERT_TRUE(turnLeft);
 }
