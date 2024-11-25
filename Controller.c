@@ -16,14 +16,6 @@ Commands Controller(ObstacleLocation *location, DustExistence *dust, int tick) {
     MotorInterface(location, &cmds);
     CleanerInterface(dust, &cmds);
 
-    printf("forward : %s\n", cmds.MotorCommands.MoveForward ? "true" : "false");
-    printf("left : %s\n", cmds.MotorCommands.TurnLeft ? "true" : "false");
-    printf("right : %s\n", cmds.MotorCommands.TurnRight ? "true" : "false");
-    printf("back : %s\n", cmds.MotorCommands.TurnBackward ? "true" : "false");
-
-    printf("Clean : %s\n", cmds.CleanerCommands.Clean ? "true" : "false");
-    printf("Powerup Clean : %s\n", cmds.CleanerCommands.PowerUpCleaning ? "true" : "false");
-    
     return cmds;
     
 }
