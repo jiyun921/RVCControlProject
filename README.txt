@@ -8,20 +8,23 @@
 
 2. 필요한 소프트웨어
    - 컴파일러: GCC
-   - 기타 요구사항: 표준 C 라이브러리
+   - 기타 요구사항: 표준 C 라이브러리, Unity 테스트 프레임워크 (unity.h, unity.c, unity_internals.h)
 
 3. 프로젝트 구조
    ```
    .
-   ├── CleanerInterface.c
-   ├── Controller.c
-   ├── DetermineDustExistence.c
-   ├── DetermineObstacle.c
-   ├── MotorInterface.c
-   ├── main.c
-   ├── test.c
-   ├── test.h
-   ├── header.h
+├── CleanerInterface.c
+├── Controller.c
+├── DetermineDustExistence.c
+├── DetermineObstacle.c
+├── MotorInterface.c
+├── main.c
+├── test.c
+├── test.h
+├── header.h
+├── unity.h
+├── unity.c
+├── unity_internals.h
    ```
 
 4. 설치 및 실행 방법
@@ -38,7 +41,8 @@
      ```
 
 5. 테스트 방법
-   - `test.c` 파일에는 30개의 테스트 케이스 함수가 포함되어 있습니다.
-   - 테스트 실행 시, 성공/실패 여부를 출력합니다.
+   - `test.c` 파일에는 31개의 테스트 케이스 함수가 포함되어 있습니다.
+   - Unity 프레임워크 (unity.h, unity.c, unity_internals.h)를 사용하여 테스트를 진행합니다.
+   - 테스트 실행 시, PASS/FAILED 여부를 출력합니다.
 
 

@@ -28,9 +28,12 @@ typedef struct {
 } Commands;
 
 Commands Controller(ObstacleLocation *location, DustExistence *dust, int tick);
-bool FrontSensorInterface(ObstacleLocation *loc, bool frontinput, int tick);
-bool LeftSensorInterface(ObstacleLocation *loc, bool leftinput, int tick);
-bool RightSensorInterface(ObstacleLocation *loc, bool rightinput, int tick);
-bool DustSensorInterface(DustExistence *dust, bool dustinput, int tick);
-void MotorInterface(ObstacleLocation *loc, Commands *commands);
-void CleanerInterface(DustExistence *dust, Commands *commands);
+
+bool FrontSensorInterface(bool FrontSensorInput, int tick);
+bool LeftSensorInterface(bool LeftSensorInput, int tick);
+bool RightSensorInterface(bool RightSensorInput, int tick);
+bool DustSensorInterface(bool dustinput, int tick);
+ObstacleLocation DetermineObstacleLocation(bool FrontObstacle, bool LeftObstacle, bool RightObstacle);
+DustExistence DetermineDustExistence(bool dustexistence); 
+void MotorInterface(Commands *commands);
+void CleanerInterface(Commands *commands);
