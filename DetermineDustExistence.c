@@ -1,9 +1,14 @@
 #include "header.h"
+#include "unistd.h"
 
-bool DustSensorInterface(DustExistence *dust, bool dustinput, int tick) {
+bool DustSensorInterface(bool dustinput, int tick) {
+    sleep(tick);
+    printf("Dust : %s\n", dustinput ? "Detected" : "Not Detected");
+    return dustinput;
+}
 
-    dust->exist = dustinput; 
-    printf("Dust: %s\n", dust->exist ? "Detected" : "Not Detected");
-    return dust->exist;
-    
+DustExistence DetermineDustExistence(bool dustexistence) {
+    DustExistence dust; 
+    dust.exist = dustexistence;
+    return dust;
 }

@@ -1,25 +1,18 @@
 #include "header.h"
 #include "unistd.h"
 
-bool FrontSensorInterface(ObstacleLocation *loc, bool frontinput, int tick) {
-    loc->FrontObstacle = frontinput;
-    printf("Front Obstacle: %s\n", loc->FrontObstacle ? "Detected" : "Not Detected");
-    // sleep(tick);
-    return loc->FrontObstacle;
-    
+
+bool FrontSensorInterface(bool FrontSensorInput, int tick) {sleep(tick); printf("Front Obstacle : %s\n",FrontSensorInput ? "Detected" : "Not Detected"); return FrontSensorInput;}
+bool LeftSensorInterface(bool LeftSensorInput, int tick) {sleep(tick); printf("Left Obstacle : %s\n", LeftSensorInput ? "Detected" : "Not Detected"); return LeftSensorInput;}
+bool RightSensorInterface(bool RightSensorInput, int tick) {sleep(tick); printf("Right Obstacle : %s\n", RightSensorInput ? "Detected" : "Not Detected"); return RightSensorInput;}
+
+ObstacleLocation DetermineObstacleLocation(bool FrontObstacle, bool LeftObstacle, bool RightObstacle) {
+    ObstacleLocation loc;
+    loc.FrontObstacle = FrontObstacle;
+    loc.LeftObstacle = LeftObstacle;
+    loc.RightObstacle = RightObstacle;
+    return loc; 
 }
 
-bool LeftSensorInterface(ObstacleLocation *loc, bool leftinput, int tick) {
-    loc->LeftObstacle = leftinput;
-    printf("Left Obstacle: %s\n", loc->LeftObstacle ? "Detected" : "Not Detected");
-    // sleep(tick);
-    return loc->LeftObstacle;
-}
 
-bool RightSensorInterface(ObstacleLocation *loc, bool rightinput, int tick) {
-    loc->RightObstacle = rightinput;
-    printf("Right Obstacle: %s\n", loc->RightObstacle ? "Detected" : "Not Detected");
-    // sleep(tick);
-    return loc->RightObstacle;
-}
 
