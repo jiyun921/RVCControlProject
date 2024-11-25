@@ -27,7 +27,7 @@ typedef struct {
     } CleanerCommands;
 } Commands;
 
-void Controller();
+Commands Controller(ObstacleLocation *location, DustExistence *dust, int tick);
 bool FrontSensorInterface(ObstacleLocation *loc, bool frontinput, int tick);
 bool LeftSensorInterface(ObstacleLocation *loc, bool leftinput, int tick);
 bool RightSensorInterface(ObstacleLocation *loc, bool rightinput, int tick);

@@ -1,7 +1,7 @@
 #include "header.h"
 #include <stdio.h>
 
-void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool *result) {
+Commands Controller(ObstacleLocation *location, DustExistence *dust, int tick) {
     // 센서 인터페이스 호출
     FrontSensorInterface(location, location->FrontObstacle, tick);
     LeftSensorInterface(location, location->LeftObstacle, tick);
@@ -16,33 +16,14 @@ void Controller(ObstacleLocation *location, DustExistence *dust, int tick, bool 
     MotorInterface(location, &cmds);
     CleanerInterface(dust, &cmds);
 
-    // 먼지가 있으면 제거
-    if (dust->exist) {
-        cmds.CleanerCommands.Clean = true;
-        dust->exist = false; // 먼지 제거
-    }
+    printf("forward : %s\n", cmds.MotorCommands.MoveForward ? "true" : "false");
+    printf("left : %s\n", cmds.MotorCommands.TurnLeft ? "true" : "false");
+    printf("right : %s\n", cmds.MotorCommands.TurnRight ? "true" : "false");
+    printf("back : %s\n", cmds.MotorCommands.TurnBackward ? "true" : "false");
 
-    /// 동작 결정 로직 (세밀하게 고려)
-    if (!location->FrontObstacle && !dust->exist) {
-        // 장애물이 없고 먼지가 없으면 전진 가능
-        *result = true;
-    } else if (location->FrontObstacle) {
-        // 전방에 장애물이 있는 경우
-        if (!location->LeftObstacle && !dust->exist) {
-            // 전방에 장애물이 있고, 좌측에 장애물이 없고 먼지도 없으면 좌회전 가능
-            *result = true;
-        } else if (location->LeftObstacle && !location->RightObstacle && !dust->exist) {
-            // 전방 및 좌측에 장애물이 있지만 우측에 장애물이 없고 먼지도 없으면 우회전 가능
-            *result = true;
-        } else if (location->LeftObstacle && !location->RightObstacle) {
-            // 전방 및 좌측, 우측에 장애물이 있으면 뒤로 돌기 가능
-            *result = true;
-        } else {
-            // 전방에 장애물이 있는 경우 전진 불가
-            *result = false;
-        }
-    } else if (dust->exist) {
-        // 먼지 제거
-        *result = false;
-    }
+    printf("Clean : %s\n", cmds.CleanerCommands.Clean ? "true" : "false");
+    printf("Powerup Clean : %s\n", cmds.CleanerCommands.PowerUpCleaning ? "true" : "false");
+    
+    return cmds;
+    
 }
