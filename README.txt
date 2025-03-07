@@ -1,3 +1,4 @@
+<img width="846" alt="Image" src="https://github.com/user-attachments/assets/029094a1-3fb0-4f9a-a89a-ddc47c234a70" />
 
 ### 빌드 및 실행환경에 대한 설명
 
